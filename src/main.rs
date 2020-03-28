@@ -59,11 +59,11 @@ fn main() {
 }
 
 fn convert_c_to_f(n: f64) -> f64 {
-    (n * 1.8) + 32.0
+    ((n * 1.8) + 32.0).round()
 }
 
 fn convert_f_to_c(n: f64) -> f64 {
-    (n - 32.0) / 0.5556
+    ((n - 32.0) * 0.5556).round()
 }
 
 #[cfg(test)]
@@ -75,14 +75,16 @@ mod tests {
       // It should correctly convert a C temperature to F.
       assert_eq!(convert_c_to_f(-40.0), -40.0);
       assert_eq!(convert_c_to_f(0.0), 32.0);
-      assert_eq!(convert_c_to_f(32.0), 89.6);
+      assert_eq!(convert_c_to_f(32.0), 90.0);
+      assert_eq!(convert_c_to_f(21.0), 70.0);
+
   }
 
   #[test]
   fn test_convert_f_to_c() {
       // It should correctly convert a C temperature to F.
-      assert_eq!(convert_c_to_f(-40.0), -40.0);
-      assert_eq!(convert_c_to_f(0.0), 32.0);
-      assert_eq!(convert_c_to_f(40.0), 104.0);
+      assert_eq!(convert_f_to_c(39.0), 4.0);
+      assert_eq!(convert_f_to_c(-40.0), -40.0);
+      assert_eq!(convert_f_to_c(100.0), 38.0);
   }
 }
